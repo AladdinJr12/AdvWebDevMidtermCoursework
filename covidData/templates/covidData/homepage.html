@@ -1,0 +1,188 @@
+{% extends "covidData/base.html" %}
+
+{% block dataList %}
+<div class="container d-flex flex-column justify-content-center align-items-center">
+    <div class="row w-100 text-center">
+        <h1 class="fs-3 pt-3 pb-5"><strong>What data would you like to look at?</strong></h1>
+    </div>
+    <div class="row w-100 text-center pb-3 SpecificDataSect"> 
+        <h1 class="fs-3 pt-3 pb-2 SectTitle"><strong>Get Specific data type over your selected date range</strong></h1>
+        <!-- Dropdown for the different data tables -->
+        <div class="col-12 w-30 pb-3">
+            <label for="rangedDateDataSelection" class="form-label pt-2 fs-2 buttonLabels">Select the COVID-19 data type:</label>
+            <select id="rangedDateDataSelection" name="rangedDateDataSelection" class="form-select w-50 mx-auto">
+                <option value="Cases">Cases</option>
+                <option value="Covid Phases">Covid Phases</option>
+                <option value="Hospitalized Patients">Hospitalized Patients</option>
+                <option value="Deaths">Death Rates</option>
+                <option value="Vaccination">Vaccination</option>
+                <option value="Hospital Discharges">Hospital Discharges</option>
+                <option value="Isolation Cases">Isolation Cases</option>
+            </select>
+        </div>
+
+        <!-- Row 1: Date Inputs -->
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="row text-center">
+                    <div class="col-6 mb-2">
+                        <label for="startDate" class="form-label fs-5 dateSelectorLabel">Start Date:</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control mx-auto DateWidget" min="2020-01-23" max="2022-01-08" value="2020-01-23">
+                    </div>
+                    <div class="col-6 mb-2">
+                        <label for="endDate" class="form-label fs-5 dateSelectorLabel">End Date:</label>
+                        <input 
+                            type="date" 
+                            id="endDate" 
+                            name="endDate" 
+                            class="form-control mx-auto DateWidget" 
+                            min="2020-01-23" 
+                            max="{{ last_date_record }}" 
+                            value="{{ last_date_record }}"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: "Check statistics for selected date and data" Button -->
+        <div class="row d-flex justify-content-center align-items-center pt-4 pb-5">
+            <div class="col-md-6">
+                <button type="button" name="action" value="DataForThatDate" class="btn btn-outline-primary fw-bold SpecificDataForDateBtn" id="SpecificDataForDateBtn">
+                    Check selected date range and data
+                </button>
+            </div>
+        </div>
+    
+    </div> 
+
+    <br>
+    <!-- ________________________2nd section______________________ -->
+    <div class="row w-100 text-center pb-3 individualDateDataSect"> 
+        <h1 class="fs-3 pt-3 pb-2 SectTitle"><strong> Get data for a specific date</strong></h1>
+        <h2 class="subHeader"> This is also where you can update or delete invidual data!</h2>
+        <!-- Dropdown for the different data tables -->
+        <div class="col-12 w-30 pb-3">
+            <label for="individualDateDataSelection" class="form-label pt-2 fs-2 buttonLabels">Select the COVID-19 data type:</label>
+            <select id="individualDateDataSelection" name="individualDateDataSelection" class="form-select w-50 mx-auto">
+                <option value="Cases">Cases</option>
+                <option value="Covid Phases">Covid Phases</option>
+                <option value="Hospitalized Patients">Hospitalized Patients</option>
+                <option value="Deaths">Death Rates</option>
+                <option value="Vaccination">Vaccination</option>
+                <option value="Hospital Discharges">Hospital Discharges</option>
+                <option value="Isolation Cases">Isolation Cases</option>
+            </select>
+        </div>
+
+        <!-- Row 1: Date Inputs -->
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-12">
+                <div class="row text-center">
+                    <div class="col-12 mb-2">
+                        <label for="inividualDateSelctor" class="form-label fs-5 dateSelectorLabel"> Select date</label>
+                        <input 
+                            type="date" 
+                            id="inividualDateSelctor" 
+                            name="dateSelctor" 
+                            class="form-control mx-auto inividualDateSelctor" 
+                            min="2020-01-23" 
+                            max="{{ last_date_record }}" 
+                            value="{{ last_date_record }}"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: "Check statistics for selected date and data" Button -->
+        <div class="row d-flex justify-content-center align-items-center pt-4 pb-5">
+            <div class="col-md-6">
+                <button type="button" 
+                        name="action" 
+                        value="DataForThatDate" 
+                        class="btn btn-outline-primary fw-bold individualDateDataBtn"
+                        id="individualDateDataBtn">
+                            Check data
+                </button>
+            </div>
+        </div>
+    
+    </div> 
+    <!-- ________________________3rd section______________________ -->
+    <br>
+    <!-- section for Adding new covid data -->
+    <div class="row text-center createNewDataSect">
+        <h1 class="pb-3 pt-3 fs-2 SectTitle"> <strong> Adding in new COVID-19 DATA for Singapore </strong></h1>  
+        <h2 class="subHeader"> Note that you will need to add in a new Covid-Phase entry if it's a new date entry</h2>
+        <!-- Dropdown for the different data tables -->
+        <div class="col-12 w-30 pb-3">
+            <label for="dataSelection" class="form-label pt-2 fs-2 buttonLabels">Select the COVID-19 data type:</label>
+            <select id="dataSelection" name="dataSelection" class="form-select w-50 mx-auto">
+                <option value="Cases">Cases</option>
+                <option value="Hospitalized Patients">Hospitalized Patients</option>
+                <option value="Deaths">Death Rates</option>
+                <option value="Vaccination">Vaccination</option>
+                <option value="Hospital Discharges">Hospital Discharges</option>
+                <option value="Isolation Cases">Isolation Cases</option>
+            </select>
+        </div>
+        <!-- date inputs -->
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-12">
+                <div class="row text-center">
+                    <div class="col-12 mb-2">
+                        <label for="dateAddEntry" class="form-label fs-5 dateSelectorLabel"> Select date, you wish to enter the data for</label>
+                        <input 
+                            type="date" 
+                            id="dateAddEntry" 
+                            name="dateSelctor" 
+                            class="form-control mx-auto dateAddEntry" 
+                            min="2020-01-23" 
+                            value="{{ last_date_record }}"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center pt-3 pb-5">
+            <button type="submit" class="btn btn-outline-primary fs-4 fw-bold AddCovidDataBtn" id="AddCovidDataBtn">
+                Add new covid data</button>
+        </div>
+    </div>
+</div>
+
+<!-- Event handlers for the buttons -->
+<script>
+    //Event handlers for the button that returns a selected data for the selected date range -->
+    document.getElementById('SpecificDataForDateBtn').addEventListener('click', function() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        const dataSelection = document.getElementById('rangedDateDataSelection').value;
+
+        // Redirect to the URL with parameters
+        const url = `/dataList/${dataSelection}/${startDate}/${endDate}/`;
+        window.location.href = url;
+    });
+
+    //--Event handler for invidual date + data section----//
+    document.getElementById('individualDateDataBtn').addEventListener('click', function() {
+        const selectedDate = document.getElementById('inividualDateSelctor').value;
+        const dataSelection = document.getElementById('individualDateDataSelection').value;
+        // Redirect to the URL with parameters
+        const url = `/data/${dataSelection}/${selectedDate}/`;
+        window.location.href = url;
+    });
+
+    //--Event handler for adding data to specific model----//
+    document.getElementById('AddCovidDataBtn').addEventListener('click', function() {
+        const selectedDate = document.getElementById('dateAddEntry').value;
+        const dataSelection = document.getElementById('dataSelection').value;
+        // Redirect to the URL with parameters
+        const url = `/add-data/${dataSelection}/${selectedDate}/`;
+ 
+        window.location.href = url;
+    });
+</script>
+
+{% endblock %}

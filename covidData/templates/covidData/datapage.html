@@ -1,0 +1,40 @@
+{% extends "covidData/base.html" %}
+{% block dataList %}
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover text-center">
+        <thead class="table-dark">
+            <tr>
+                {% for key, value in view.serialized_data.items %}
+                    <th scope="col">{{ key }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                {% for key, value in view.serialized_data.items %}
+                    <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center mt-4">
+    <button id="deleteBtn" class="btn btn-danger btn-lg fs-5 fw-bold">Delete Data</button>
+</div>
+
+<!-- Event handlers for the buttons -->
+<script> 
+    //--Event handler for adding data to specific model----//
+    document.getElementById('deleteBtn').addEventListener('click', function() {
+        const selectedDate = "{{data_type}}";
+        const dataSelection = "{{date_range}}";
+        // Redirect to the URL with parameters
+        const url = `/delete-data/${dataSelection}/${selectedDate}/`;
+ 
+        window.location.href = url;
+    });
+
+</script>
+
+{% endblock %}

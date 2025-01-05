@@ -1,0 +1,33 @@
+<!-- please note its day/month/year when inputting the date -->
+{% extends "covidData/base.html" %}
+
+{% block dataList %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h2>Add Data for Covid Phases</h2>
+                    <h2 class="pt-3 subHeader">
+                        As this is newly recorded date entry, you will first need to create a Covid Phase entry!
+                    </h2>
+                    <h2 class="pt-3 subHeader">
+                        Date input for CovidPhases should be MM/DD/YYYY
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="d-flex justify-content-center mt-3">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

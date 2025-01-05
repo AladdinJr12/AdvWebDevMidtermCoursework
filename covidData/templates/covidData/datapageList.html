@@ -1,0 +1,35 @@
+{% extends "covidData/base.html" %}
+{% load custom_filters %}
+{% block dataList %}
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover text-center">
+        <thead class="table-dark">
+            <tr>
+                {% for fieldName in field_names %}       
+                    <th>
+                        {% if fieldName == "date" %}
+                            date/Covid-Phase
+                        {% else %}
+                            {{ fieldName }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in results %}
+                <tr>
+                    {% for field in field_names %}
+                    <!-- note: that we are using custom_filters.py for retrieving dictionaries items -->
+                        <td>{{ record|get_item:field }}</td> 
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+
+{% endblock %}
